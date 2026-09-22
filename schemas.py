@@ -1,9 +1,17 @@
 from pydantic import BaseModel, Field, field_validator, model_validator, EmailStr, ConfigDict
 from datetime import datetime
+from typing import Literal
 
 class UserRequest(BaseModel):
     email: EmailStr
     password: str =Field(min_length=8)
+
+    @field_validator("password")
+    @classmethod
+    def no_blank(cls, password: str) -> str:
+        if not password.strip():
+            raise ValueError("Password can't be blank.")
+        return password
 
 class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -67,4 +75,29 @@ class TaskUpdate(BaseModel):
 
 class Token(BaseModel):
     access_token: str
-    token_type: str
+    token_type: Literal["bearer"]
+
+class AIAnalyzeRequest(BaseModel):
+    prompt: str = Field(
+        min_length=1,
+        max_length=1000,
+        description="Natural-language request describing how the user wants their tasks analyzed."
+        )
+
+class Recommendation(BaseModel):
+    task_id: int
+    reason: str = Field(max_length=300)
+
+class AIResponse(BaseModel):
+    summary: str = Field(max_length=500)
+    recommendations: list[Recommendation] = Field(max_length=10, description="Recommendation.task_id is not repeatable.")
+
+    @field_validator("recommendations")
+    @classmethod
+    def check_unique_ids(cls, v: list[Recommendation]) -> list[Recommendation]:
+        ids = [recommendation.task_id for recommendation in v]
+        
+        if len(ids) != len(set(ids)):
+            raise ValueError("Task_id is not repeatable.")
+            
+        return v

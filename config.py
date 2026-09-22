@@ -6,6 +6,9 @@ class Settings(BaseSettings):
     algorithm: str
     database_url: str
     debug: bool
+    access_token_expire_minutes: int
+    api_key: str
+    ai_model: str
 
     model_config = SettingsConfigDict(env_file=".env")
 

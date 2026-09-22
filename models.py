@@ -16,6 +16,6 @@ class Task(Base):
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
     completed = Column(Boolean, nullable=False)
-    priority = Column(Integer, index=True, nullable=False)
+    priority = Column(Integer, nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
