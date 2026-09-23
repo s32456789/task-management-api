@@ -308,7 +308,7 @@ The endpoint can support different analysis instructions without requiring separ
 
 ```json
 {
-  "prompt": "找出最需要優先處理的任務，並說明原因。"
+  "prompt": "Identify the tasks that require the highest priority and explain the reasons."
 }
 ```
 
@@ -316,7 +316,7 @@ The endpoint can support different analysis instructions without requiring separ
 
 ```json
 {
-  "prompt": "找出目前最值得先完成的未完成任務。"
+  "prompt": "Identify the outstanding tasks that are currently most worth completing first."
 }
 ```
 
@@ -324,7 +324,7 @@ The endpoint can support different analysis instructions without requiring separ
 
 ```json
 {
-  "prompt": "分析高優先度任務，告訴我哪些最值得立即處理。"
+  "prompt": "Analyze the high-priority tasks and tell me which ones are most worth addressing immediately."
 }
 ```
 
